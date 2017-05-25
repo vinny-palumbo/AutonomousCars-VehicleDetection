@@ -1,4 +1,4 @@
-**Vehicle Detection Project**
+# Vehicle Detection Project
 
 The goals / steps of this project are the following:
 
@@ -51,13 +51,18 @@ I tried various combinations of parameters and settled on my final choice of Bin
 Here is my final choice of Feature Extraction parameters, which gives the Classifier a Test Accuracy of 99.47%:
 
 `
-# Features Extraction Parameters
 color_space='LUV'
+
 spatial_size=(16, 16)
+
 hist_bins=32
+
 orient=8
+
 pix_per_cell=8
+
 cell_per_block=2
+
 hog_channel=0
 `
 
@@ -69,8 +74,11 @@ I used the `model_selection.GridSearchCV()` function to try different combinatio
 
 `
 parameters = {'kernel':('linear', 'rbf', 'sigmoid'), 'C':[1, 10, 15]}
+
 svr = svm.SVC()
+
 clf = model_selection.GridSearchCV(svr, parameters)
+
 clf.fit(X_train, y_train)
 `
 
@@ -94,8 +102,11 @@ An overlap of 85% gave me the best compromise between detecting vehicles accurat
 
 Ultimately I searched on 3 scales of windows using LUV 0-channel HOG features plus spatially binned color and histograms of color in the feature vector, which provided a nice result.  Here are some example images:
 
-![alt text][image3] ![alt text][image4]
-![alt text][image5] ![alt text][image6]
+![alt text][image3] 
+![alt text][image4]
+
+![alt text][image5] 
+![alt text][image6]
 ---
 
 ### Video Implementation
@@ -140,9 +151,11 @@ Instead of extracting features from each individual window as I search across th
 
 In addition, I could do a sliding window search on the entire lower-half of the image only when I lose a vehicle detection. But when I have a vehicle detected, I could do a sliding window search only near the position of the vehicles on the previous frame. 
 
+
 To improve the accuracy and/or speed of the classifier, I could try using a Decision Tree or some other model.
 
 To optimize my classifier, I could devise a train/test split that avoids having nearly identical images in both my training and test sets. This means extracting the time-series tracks from the GTI data and separating the images manually to make sure train and test images are sufficiently different from one another.
+
 
 To make the detection windows less wobbly and unstable, and to reduce the false-positives, I could integrate the heatmaps of several previous frames before labeling the integrated heatmap.
 
