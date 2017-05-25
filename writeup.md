@@ -12,8 +12,8 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 [image1]: ./output_images/hog-features.png
 [image2]: ./output_images/sliding-windows.png
-[image3]: ./output_images/hot-windows-test1.jpg
-[image4]: ./output_images/hot-windows-test3.jpg
+[image3]: ./output_images/hot-windows-test1.png
+[image4]: ./output_images/hot-windows-test3.png
 [image5]: ./output_images/hot-windows-test4.png
 [image6]: ./output_images/hot-windows-test5.png
 [image7]: ./output_images/heat-map.png
@@ -50,21 +50,15 @@ I tried various combinations of parameters and settled on my final choice of Bin
 
 Here is my final choice of Feature Extraction parameters, which gives the Classifier a Test Accuracy of 99.47%:
 
-`
+```python
 color_space='LUV'
-
 spatial_size=(16, 16)
-
 hist_bins=32
-
 orient=8
-
 pix_per_cell=8
-
 cell_per_block=2
-
 hog_channel=0
-`
+```
 
 #### 3. Describe how (and identify where in your code) you trained a classifier using your selected HOG features (and color features if you used them).
 
@@ -72,15 +66,12 @@ I trained a Support Vector Machine Classifier using the `sklearn` library, in th
 
 I used the `model_selection.GridSearchCV()` function to try different combinations of parameters and choose the best combination for the model:
 
-`
+```python
 parameters = {'kernel':('linear', 'rbf', 'sigmoid'), 'C':[1, 10, 15]}
-
 svr = svm.SVC()
-
 clf = model_selection.GridSearchCV(svr, parameters)
-
 clf.fit(X_train, y_train)
-`
+```
 
 The best parameters turned out to be `kernel='rbf'` and `C=10`. These gave the classifier a test accuracy of 99.47%
 
